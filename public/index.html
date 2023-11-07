@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>POST and GET Requests</title>
+</head>
+<body>
+	<h1>Create api key</h1>
+	<button id="getApiKeyBtn">Get Api Key</button>
+    <pre id="ApiKeyResponse"></pre>
+
+    <h1>Create Hallunication</h1>
+    <form id="postForm">
+        <label for="model_id">model_id:</label>
+        <input type="model_id" id="model_id" name="model_id" required>
+        <br>
+        <label for="prompt">prompt:</label>
+        <input type="prompt" id="prompt" name="prompt" required>
+        <br>
+		<label for="bad_response">bad_response:</label>
+        <input type="bad_response" id="bad_response" name="bad_response" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>Get hallucination</h1>
+    <button id="refreshButton">Refresh Hallucination</button>
+    <table>
+        <thead>
+            <tr>
+                <th>_id</th>
+                <th>model_id</th>
+                <th>prompt</th>
+                <th>bad_response</th>
+				<th>p_tuned</th>
+            </tr>
+        </thead>
+        <tbody id="HCNList">
+        </tbody>
+    </table>
+
+    <script>
+        const postForm = document.getElementById("postForm");
+        const HCNList = document.getElementById("HCNList");
+		const refreshButton = document.getElementById("refreshButton");
+
+		const getApiKeyBtn = document.getElementById("getApiKeyBtn");
+		const ApiKeyResponse = document.getElementById("ApiKeyResponse");
+
+        postForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(postForm);
+            const postData = {
+                model_id: formData.get("model_id"),
+                prompt: formData.get("prompt"),
+				bad_response: formData.get("bad_response"),
+            };
+
+            // Send a POST request to your API endpoint
+            fetch("http://localhost:3000/api/hallucination", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postData),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("POST Response:", data);
+            })
+            .catch((error) => {
+                console.error("POST Error:", error);
+            });
+        });
+
+		function displayDataInGrid(data) {
+            HCNList.innerHTML = ""; // Clear the previous data
+
+            data.forEach((item) => {
+                const row = HCNList.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+				const cell5 = row.insertCell(4);
+
+                cell1.innerHTML = item._id || "";
+                cell2.innerHTML = item.model_id || "";
+                cell3.innerHTML = item.prompt || "";
+                cell4.innerHTML = item.bad_response || "";
+				cell5.innerHTML = item.p_tuned || "";
+            });
+        }
+
+		async function sendGetRequest() {
+			// Handle the GET request from the API
+			await fetch("http://localhost:3000/api/hallucination", {
+				method: "GET",
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("GET Response:", data.data.hallucination);
+				displayDataInGrid(data.data.hallucination)
+				//HCNList.textContent = JSON.stringify(data, null, 2);
+			})
+			.catch((error) => {
+				console.error("GET Error:", error);
+			});
+		}
+
+		refreshButton.addEventListener("click", () => {
+            sendGetRequest();
+        });
+
+		function getApiKeyFn() {
+			// Handle the GET request from the API
+			fetch("http://localhost:3000/api/create-api-key", {
+				method: "Post",
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("Post Response:", data);
+				ApiKeyResponse.textContent = JSON.stringify(data, null, 2);
+			})
+			.catch((error) => {
+				console.error("Post Error:", error);
+			});
+		}
+        getApiKeyBtn.addEventListener("click", () => {
+            getApiKeyFn();
+        });
+
+    </script>
+</body>
+</html>

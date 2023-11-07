@@ -21,6 +21,10 @@ app.use(logger('dev'));
 app.use(Utilities.send404);
 app.disable('x-powered-by');
 
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 const server = app
     .listen(process.env.PORT || process.env.APP_PORT, () => {
         console.log(

@@ -1,0 +1,66 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "yarn install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "dev": {
+      "name": "dev",
+      "command": "yarn dev",
+      "runAtStart": true,
+      "preview": {
+        "port": 3000
+      }
+    },
+    "start": {
+      "name": "start",
+      "command": "yarn start",
+      "runAtStart": false
+    },
+    "forever-start": {
+      "name": "forever-start",
+      "command": "yarn forever-start",
+      "runAtStart": false
+    },
+    "forever-restart": {
+      "name": "forever-restart",
+      "command": "yarn forever-restart",
+      "runAtStart": false
+    },
+    "forever-stop": {
+      "name": "forever-stop",
+      "command": "yarn forever-stop",
+      "runAtStart": false
+    },
+    "migration": {
+      "name": "migration",
+      "command": "yarn migration",
+      "runAtStart": false
+    },
+    "lint": {
+      "name": "lint",
+      "command": "yarn lint",
+      "runAtStart": false
+    },
+    "lint:fix": {
+      "name": "lint:fix",
+      "command": "yarn lint:fix",
+      "runAtStart": false
+    },
+    "upgrade": {
+      "name": "upgrade",
+      "command": "yarn upgrade",
+      "runAtStart": false
+    },
+    "prettier": {
+      "name": "prettier",
+      "command": "yarn prettier",
+      "runAtStart": false
+    }
+  }
+}
