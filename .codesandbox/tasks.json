@@ -19,48 +19,43 @@
     },
     "start": {
       "name": "start",
-      "command": "yarn start",
-      "runAtStart": false
+      "command": "yarn start"
     },
     "forever-start": {
       "name": "forever-start",
-      "command": "yarn forever-start",
-      "runAtStart": false
+      "command": "yarn forever-start"
     },
     "forever-restart": {
       "name": "forever-restart",
-      "command": "yarn forever-restart",
-      "runAtStart": false
+      "command": "yarn forever-restart"
     },
     "forever-stop": {
       "name": "forever-stop",
-      "command": "yarn forever-stop",
-      "runAtStart": false
+      "command": "yarn forever-stop"
     },
     "migration": {
       "name": "migration",
-      "command": "yarn migration",
-      "runAtStart": false
+      "command": "yarn migration"
     },
     "lint": {
       "name": "lint",
-      "command": "yarn lint",
-      "runAtStart": false
+      "command": "yarn lint"
     },
     "lint:fix": {
       "name": "lint:fix",
-      "command": "yarn lint:fix",
-      "runAtStart": false
+      "command": "yarn lint:fix"
     },
     "upgrade": {
       "name": "upgrade",
-      "command": "yarn upgrade",
-      "runAtStart": false
+      "command": "yarn upgrade"
     },
     "prettier": {
       "name": "prettier",
-      "command": "yarn prettier",
-      "runAtStart": false
+      "command": "yarn prettier"
+    },
+    "git pull origin master": {
+      "name": "git pull origin master",
+      "command": "git pull origin master"
     }
   }
 }
