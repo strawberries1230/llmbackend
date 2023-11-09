@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const submitHallucination = async (req, res) => {
     try {
-        console.log('post');
         const { model_id, prompt, bad_response } = req.body;
         // Use the public key to verify the request (optional).
         const mId = mongoose.Types.ObjectId(model_id);
@@ -33,7 +32,6 @@ const submitHallucination = async (req, res) => {
 
 const getHallucination = async (req, res) => {
     try {
-        console.log('get');
         const hallucination = await Hallucination.find({});
         Utilities.apiResponse(res, 200, 'Hallucination found!', {
             hallucination,

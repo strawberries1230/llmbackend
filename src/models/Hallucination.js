@@ -10,7 +10,7 @@ const HallucinationSchema = new Schema(
         },
         model_id: {
             type: Schema.Types.ObjectId,
-            required: true,
+            required: false,
         },
         prompt: {
             type: String,

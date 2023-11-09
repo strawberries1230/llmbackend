@@ -10,20 +10,21 @@
 
     <h1>Create Hallunication</h1>
     <form id="postForm">
-        <label for="model_id">model_id:</label>
-        <input type="model_id" id="model_id" name="model_id" required>
+        <label for="model_id">model_id:   </label>
+        <input type="textContent" id="model_id" name="model_id" style="display: block;" required>
         <br>
         <label for="prompt">prompt:</label>
-        <input type="prompt" id="prompt" name="prompt" required>
+        <input type="textContent" id="prompt" name="prompt" style="display: block;" required>
         <br>
 		<label for="bad_response">bad_response:</label>
-        <input type="bad_response" id="bad_response" name="bad_response" required>
+        <input type="textContent" id="bad_response" name="bad_response" style="display: block;" required>
         <br>
         <input type="submit" value="Submit">
     </form>
 
     <h1>Get hallucination</h1>
     <button id="refreshButton">Refresh Hallucination</button>
+	<b id="HCNRequestStatus">text</b>
     <table>
         <thead>
             <tr>
@@ -42,6 +43,7 @@
         const postForm = document.getElementById("postForm");
         const HCNList = document.getElementById("HCNList");
 		const refreshButton = document.getElementById("refreshButton");
+		const HCNRequestStatus = document.getElementById("HCNRequestStatus");
 
 		const getApiKeyBtn = document.getElementById("getApiKeyBtn");
 		const ApiKeyResponse = document.getElementById("ApiKeyResponse");
@@ -93,15 +95,20 @@
         }
 
 		async function sendGetRequest() {
+			HCNRequestStatus.textContent = "waiting"
 			// Handle the GET request from the API
 			await fetch("http://localhost:3000/api/hallucination", {
 				method: "GET",
 			})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log("GET Response:", data.data.hallucination);
+				console.log("Get hallucination Response:", data);
 				displayDataInGrid(data.data.hallucination)
-				//HCNList.textContent = JSON.stringify(data, null, 2);
+				if (data.status === 200) {
+					HCNRequestStatus.textContent = "done"
+				} else {
+					HCNRequestStatus.textContent = "failed"
+				}
 			})
 			.catch((error) => {
 				console.error("GET Error:", error);
@@ -112,10 +119,10 @@
             sendGetRequest();
         });
 
-		function getApiKeyFn() {
+		async function getApiKeyFn() {
 			// Handle the GET request from the API
-			fetch("http://localhost:3000/api/create-api-key", {
-				method: "Post",
+			await fetch("https://localhost:3000/api/create-api-key", {
+				method: "POST",
 			})
 			.then((response) => response.json())
 			.then((data) => {
@@ -126,7 +133,8 @@
 				console.error("Post Error:", error);
 			});
 		}
-        getApiKeyBtn.addEventListener("click", () => {
+        getApiKeyBtn.addEventListener("click", (event) => {
+			event.preventDefault();
             getApiKeyFn();
         });
 
