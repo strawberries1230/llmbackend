@@ -1,3 +1,5 @@
+const JWT = require('jsonwebtoken');
+
 const apiResponse = (res, status, message, data) => {
     let newMessage = '';
     if (process.env.APP_DEBUG === 'true') {
@@ -55,10 +57,8 @@ module.exports.apiKeyValidate = (req, res, next) => {
 };
 
 module.exports.signAccessToken = (payload) => {
-    try {
-        console.log('payload', payload);
-        const JWT = require('jsonwebtoken');
-        return new Promise((resolve, reject) => {
+       return new Promise((resolve, reject) => {
+            console.log('payload', payload);
             const options = {
                 expiresIn: '7d',
                 issuer: 'pickurpage.com',
@@ -77,9 +77,6 @@ module.exports.signAccessToken = (payload) => {
                 },
             );
         });
-    } catch (error) {
-        apiResponse(res, 500, err);
-    }
 };
 
 module.exports.verifyAccessToken = (req, res, next) => {
