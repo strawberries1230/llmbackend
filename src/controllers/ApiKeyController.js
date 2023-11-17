@@ -17,7 +17,7 @@ const createApiKey = async (req, res) => {
         };
 
         const apiKey = new ApiKey(keyPair);
-        const savedApiKey = await apiKey.save();
+        await apiKey.save();
 
         Utilities.apiResponse(res, 200, 'Api key created Successfully!', {
             publicKey,
@@ -49,12 +49,13 @@ const createApiKeyWithNumber = async (req, res) => {
     }
 };
 const authenticateApiKey = async (req, res) => {
-    const { public_key } = req.body;
+    const publicKey = req.body.public_key;
     try {
-        const apiKey = await ApiKey.findOne({ public_key });
+        const apiKey = await ApiKey.findOne({ public_key: publicKey });
         const pvtKey = apiKey.private_key;
+        console.log('api key :' + apiKey);
         if (apiKey) {
-            checkMatch(public_key, pvtKey);
+            checkMatch(publicKey, pvtKey);
             // API key authentication successful, generate JWT token
             // const token = jwt.sign({ publicKey }, 'your-secret-key', { expiresIn: '1h' });
             // res.json({ token });

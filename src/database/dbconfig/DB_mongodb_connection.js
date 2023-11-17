@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ENV = require('./DB_config');
+// const ENV = require('./DB_config');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 async function connect() {

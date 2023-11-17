@@ -48,7 +48,7 @@ const genApiKey = () => {
 
 const checkMatch = (publicKey, privateKey) => {
     const sign = crypto.createSign('SHA256');
-
+    // console.log('check match 1');
     // Both strings should be same
     sign.update('randomStr');
     sign.end();
