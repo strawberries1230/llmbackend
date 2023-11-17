@@ -1,4 +1,8 @@
-const { generateKeyPair, checkMatch } = require('../util/keyPairTool');
+const {
+    generateKeyPair,
+    checkMatch,
+    generateKeyPairFromSeed,
+} = require('../util/keyPairTool');
 const Utilities = require('../Utilities');
 const ApiKey = require('../models/ApiKey');
 
@@ -23,6 +27,27 @@ const createApiKey = async (req, res) => {
     }
 };
 
+const createApiKeyWithNumber = async (req, res) => {
+    try {
+        console.log('create api key with number');
+        const seed = req.body.seed;
+        const { publicKey, privateKey } = generateKeyPairFromSeed(seed);
+        const keyPair = {
+            private_key: privateKey,
+            public_key: publicKey,
+            status: true,
+        };
+
+        const apiKey = new ApiKey(keyPair);
+        await apiKey.save();
+
+        Utilities.apiResponse(res, 200, 'Api key created Successfully!', {
+            publicKey,
+        });
+    } catch (error) {
+        Utilities.apiResponse(res, 500, error);
+    }
+};
 const authenticateApiKey = async (req, res) => {
     const { public_key } = req.body;
     try {
@@ -42,4 +67,4 @@ const authenticateApiKey = async (req, res) => {
     }
 };
 
-module.exports = { createApiKey, authenticateApiKey };
+module.exports = { createApiKey, authenticateApiKey, createApiKeyWithNumber };

@@ -12,6 +12,10 @@ const apiKeyController = require('../controllers/ApiKeyController');
 const hallucinationController = require('../controllers/HallucinationController');
 
 router.post('/create-api-key', apiKeyController.createApiKey);
+router.post(
+    '/create-api-key-with-number',
+    apiKeyController.createApiKeyWithNumber,
+);
 router.post('/authenticate-api-key', apiKeyController.authenticateApiKey);
 router.post('/hallucination', hallucinationController.submitHallucination);
 router.get('/hallucination', hallucinationController.getHallucination);

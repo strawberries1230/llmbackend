@@ -8,6 +8,15 @@
 	<button id="getApiKeyBtn">Get Api Key</button>
     <pre id="ApiKeyResponse"></pre>
 
+	<h1>Create api key with number</h1>
+	<form id="apiKeyForm">
+        <label for="input_num">Input a number:   </label>
+        <input type="textContent" id="input_num" name="input_num" style="display: block;" required>
+        <br>
+        <input type="submit" value="Get Api Key With number">
+    </form>    
+	<pre id="ApiKeyWithNumberResponse"></pre>
+
     <h1>Create Hallunication</h1>
     <form id="postForm">
         <label for="model_id">model_id:   </label>
@@ -47,6 +56,9 @@
 
 		const getApiKeyBtn = document.getElementById("getApiKeyBtn");
 		const ApiKeyResponse = document.getElementById("ApiKeyResponse");
+		const ApiKeyWithNumberResponse = document.getElementById(
+			"ApiKeyWithNumberResponse"
+		);
 
         postForm.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -93,6 +105,32 @@
 				cell5.innerHTML = `${item.p_tuned}`;
             });
         }
+		async function getApiKeyFnWithNumber() {
+			const postData = {
+                seed: document.getElementById("input_num").value,
+            };
+			await fetch("https://rhq4sz-3000.csb.app/api/create-api-key-with-number", {
+				method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postData),
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("Post Response:", data);
+				ApiKeyWithNumberResponse.textContent = JSON.stringify(data, null, 2);
+			})
+			.catch((error) => {
+				console.error("Post Error:", error);
+			});
+		}
+		apiKeyForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+			getApiKeyFnWithNumber();
+	      }
+		)
+
 
 		async function sendGetRequest() {
 			HCNRequestStatus.textContent = "waiting"
