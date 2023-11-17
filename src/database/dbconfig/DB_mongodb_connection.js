@@ -26,5 +26,5 @@ async function connect() {
             console.log('');
         });
 }
-connect().then(console.log('connect db'));
+connect().then(() => console.log('connect db'));
 mongoose.Promise = global.Promise;

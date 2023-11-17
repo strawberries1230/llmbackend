@@ -59,7 +59,7 @@
             };
 
             // Send a POST request to your API endpoint
-            fetch("http://localhost:3000/api/hallucination", {
+            fetch("https://rhq4sz-3000.csb.app/api/hallucination", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,7 +97,7 @@
 		async function sendGetRequest() {
 			HCNRequestStatus.textContent = "waiting"
 			// Handle the GET request from the API
-			await fetch("http://localhost:3000/api/hallucination", {
+			await fetch("https://rhq4sz-3000.csb.app/api/hallucination", {
 				method: "GET",
 			})
 			.then((response) => response.json())
@@ -120,9 +120,9 @@
         });
 
 		async function getApiKeyFn() {
-			// Handle the GET request from the API
-			await fetch("https://localhost:3000/api/create-api-key", {
-				method: "POST",
+			// Handle the GET request from the Api
+			await fetch("https://rhq4sz-3000.csb.app/api/create-api-key", {
+				method: "POST"
 			})
 			.then((response) => response.json())
 			.then((data) => {
